@@ -61,6 +61,21 @@ app.post("/api/recipes", (req, res, next) => {
     });
 });
 
+// reading a single item from db
+app.get("/api/recipes/:id", (req, res, next) => {
+  Recipe.findOne({
+    _id: req.params.id
+  })
+    .then(recipe => {
+      res.status(200).json(recipe);
+    })
+    .catch(error => {
+      res.status(404).json({
+        error: error
+      });
+    });
+});
+
 //   retrieve items here
 app.use("/api/recipes", (req, res, next) => {
   Recipe.find()
