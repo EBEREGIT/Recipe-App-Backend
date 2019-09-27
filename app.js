@@ -61,6 +61,44 @@ app.post("/api/recipes", (req, res, next) => {
     });
 });
 
+// updating an item
+app.put("/api/recipes/:id", (req, res, next) => {
+  const recipe = new Recipe({
+    _id: req.params.id,
+    title: req.body.title,
+    ingredients: req.body.ingredients,
+    instructions: req.body.instructions,
+    difficulty: req.body.difficulty,
+    time: req.body.time,
+  });
+  Recipe.updateOne({ _id: req.params.id }, recipe)
+    .then(() => {
+      res.status(201).json({
+        message: "Post updated successfully!"
+      });
+    })
+    .catch(error => {
+      res.status(400).json({
+        error: error
+      });
+    });
+});
+
+// deleting
+app.delete("/api/recipes/:id", (req, res, next) => {
+  Recipe.deleteOne({ _id: req.params.id })
+    .then(() => {
+      res.status(200).json({
+        message: "Deleted!"
+      });
+    })
+    .catch(error => {
+      res.status(400).json({
+        error: error
+      });
+    });
+});
+
 // reading a single item from db
 app.get("/api/recipes/:id", (req, res, next) => {
   Recipe.findOne({
