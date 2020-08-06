@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-require('dotenv').config()
+require("dotenv").config();
 
 // call and initialize express here
 const app = express();
@@ -10,13 +10,10 @@ const Recipe = require("./models/recipe");
 
 // connect this app to MongoDB with mongoose
 mongoose
-  .connect(
-    process.env.DB_URL,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Successfully connected to MongoDB Atlas, Yaeyeh!");
   })
@@ -117,6 +114,10 @@ app.get("/api/recipes/:id", (req, res, next) => {
         error: error,
       });
     });
+});
+
+app.get("/", (req, res, next) => {
+  res.send("Welcome to Recipe App");
 });
 
 //   retrieve items here
