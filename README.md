@@ -2,11 +2,11 @@
 This RESTful API is built with nodejs, express and mongoDB. It powers project like https://github.com/EBEREGIT/Recipt-App-Frontend
 
 ## Dependencies
-- [body-parser]()
-- [dotenv]()
-- [express]()
-- [mongoose]()
-- [nodemon]()
+- [body-parser](https://www.npmjs.com/package/body-parser)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [express](https://www.npmjs.com/package/express)
+- [mongoose](https://www.npmjs.com/package/mongoose)
+- [nodemon](https://www.npmjs.com/package/nodemon)
 
 ## Installation
 - Clone the repo ``git clone https://github.com/EBEREGIT/Recipe-App-Backend``
