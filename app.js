@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+require('dotenv').config()
 
 // call and initialize express here
 const app = express();
@@ -10,12 +11,16 @@ const Recipe = require("./models/recipe");
 // connect this app to MongoDB with mongoose
 mongoose
   .connect(
-    "mongodb+srv://<username>:<password>@cluster0-ev2sa.mongodb.net/test?retryWrites=true&w=majority"
+    process.env.DB_URL,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
   )
   .then(() => {
     console.log("Successfully connected to MongoDB Atlas, Yaeyeh!");
   })
-  .catch(error => {
+  .catch((error) => {
     console.log("Unable to connect to MongoDB Atlas!");
     console.error(error);
   });
@@ -45,18 +50,18 @@ app.post("/api/recipes", (req, res, next) => {
     instructions: req.body.instructions,
     difficulty: req.body.difficulty,
     time: req.body.time,
-    _id: req.body._id
+    _id: req.body._id,
   });
   recipe
     .save()
     .then(() => {
       res.status(201).json({
-        message: "Post saved successfully!"
+        message: "Post saved successfully!",
       });
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(400).json({
-        error: error
+        error: error,
       });
     });
 });
@@ -74,12 +79,12 @@ app.put("/api/recipes/:id", (req, res, next) => {
   Recipe.updateOne({ _id: req.params.id }, recipe)
     .then(() => {
       res.status(201).json({
-        message: "Post updated successfully!"
+        message: "Post updated successfully!",
       });
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(400).json({
-        error: error
+        error: error,
       });
     });
 });
@@ -89,12 +94,12 @@ app.delete("/api/recipes/:id", (req, res, next) => {
   Recipe.deleteOne({ _id: req.params.id })
     .then(() => {
       res.status(200).json({
-        message: "Deleted!"
+        message: "Deleted!",
       });
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(400).json({
-        error: error
+        error: error,
       });
     });
 });
@@ -102,14 +107,14 @@ app.delete("/api/recipes/:id", (req, res, next) => {
 // reading a single item from db
 app.get("/api/recipes/:id", (req, res, next) => {
   Recipe.findOne({
-    _id: req.params.id
+    _id: req.params.id,
   })
-    .then(recipe => {
+    .then((recipe) => {
       res.status(200).json(recipe);
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(404).json({
-        error: error
+        error: error,
       });
     });
 });
@@ -117,12 +122,12 @@ app.get("/api/recipes/:id", (req, res, next) => {
 //   retrieve items here
 app.use("/api/recipes", (req, res, next) => {
   Recipe.find()
-    .then(recipes => {
+    .then((recipes) => {
       res.status(200).json(recipes);
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(400).json({
-        error: error
+        error: error,
       });
     });
 });
